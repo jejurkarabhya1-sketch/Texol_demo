@@ -1,56 +1,21 @@
-# TEXOL Engineering website redesign (static Astro + GitHub Pages)
+# TEXOL Engineering — responsive redesign (Astro + GitHub Pages)
 
-This is a static redesign prototype based on TEXOL Engineering's public website. It is not connected to TEXOL's WordPress admin, database, private source code or lead-management systems.
+## Features in this build
+- Responsive desktop/tablet/mobile layout and mobile navigation
+- Accessible image lightbox: click photos to enlarge; use arrow keys, Escape, or the close button; open the original file separately
+- Scroll progress indicator and back-to-top button
+- Page titles/descriptions, canonical URLs, Open Graph/Twitter metadata, organization JSON-LD, robots.txt, sitemap.xml and favicon
+- Lazy-loaded responsive images and reduced-motion support
+- GitHub Actions deployment workflow
 
-## Pages included
+## Deploy
+1. Keep this project at the root of the `Texol_demo` repository.
+2. In Settings → Pages, choose GitHub Actions as the source.
+3. Commit/push to `main`; inspect Actions for the build and deploy result.
 
-Home; Company Profile; Solutions; Industries Served; Projects; Bio; Chemicals; Petrochemicals; Petroleum, Gas & Refinery; Pharma / Specialty Chemicals; Polymer / Paints; Strategic Area; Achievements; Standard Units; Execution Strategies; Mission & Approach; Key Persons; Global Connections; Downloads; Gallery; TEXOL Energy; Contact.
-
-## Image handling
-
-- The gallery uses direct links to full-size image files publicly linked from TEXOL's original Gallery page (office and factory views).
-- Gallery images use `object-fit: contain` to avoid distortion/cropping and link to the source file for full-size viewing.
-- Key-person profile text is based on the public profile. Individual portrait image URLs were not verified from the text available during research, so initials are used rather than fabricated portraits. Replace them with company-approved original portrait files when verified.
-- Many image files remain hosted on `texol.in`; this means they depend on that host remaining available. Before launch, confirm permission and consider self-hosting approved high-resolution files in `public/images/`.
-- Some old legacy image URLs on the original website may be low-resolution or no longer available. A display change cannot restore missing image detail.
-
-## Important data and launch notes
-
-- Public text was reviewed for company history, offerings, project names, key persons, achievements, energy information and office/factory contacts. Some historical claims, role titles, emails, certificates and current project status should be reviewed by TEXOL before production publication.
-- The contact form in the existing prototype uses a mailto flow; it does not store or submit leads to a backend.
-- GitHub Pages serves static sites only. This project does not include WordPress/PHP functionality or a private admin system.
-- No deployment has been performed.
-
-## Run locally
-
-Requires Node.js 20+ and npm.
-
-```bash
-npm install
-npm run dev
-npm run build
-```
-
-## GitHub Pages
-
-The repository includes `.github/workflows/deploy.yml`. Push the project to a GitHub repository, set Pages source to **GitHub Actions**, and confirm `astro.config.mjs` `base` if deploying under a repository subpath. If using a custom domain, configure it only after review and authorization.
-
-## Source pages reviewed
-
-- https://texol.in/
-- https://texol.in/index.php/company-profile/
-- https://texol.in/index.php/achievements/
-- https://texol.in/index.php/standard-units-of-texol/
-- https://texol.in/index.php/industries-served/
-- https://texol.in/index.php/key-persons-profile/
-- https://texol.in/index.php/projects/
-- https://texol.in/index.php/gallery/
-- https://texol.in/index.php/texol-energy/
-- https://texol.in/index.php/contact-us/
-
-
-## GitHub Pages configuration
-
-This project is configured for the repository `abhijejurkar/Texol_demo`, with the project-site base path `/Texol_demo`. If you rename the repository, update `base` in `astro.config.mjs` and the `/Texol_demo/` asset prefixes in `src/pages/*.astro`.
-
-The browser script is loaded as an inline-preserved public asset (`/Texol_demo/script.js`) so Astro does not try to resolve it relative to each `.astro` source file.
+## Important
+- GitHub Pages URL configured as `https://abhijejurkar.github.io/Texol_demo/`. Update `astro.config.mjs`, canonical tags and sitemap if the repository/user changes.
+- Original TEXOL photos remain externally hosted on `texol.in` in this package; an external server can block or change them. For maximum reliability and performance, obtain permission and bundle approved image files locally.
+- Contact form prepares an email draft only; it does not send/store form data on a server.
+- SEO metadata is a technical foundation, not a guarantee of ranking. Search Console submission, real domain canonical strategy, image permissions, company claims and contact details should be reviewed before production.
+- This package has not been live-deployed by the assistant. Run GitHub Actions to confirm the final build.

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://abhijejurkar.github.io/Texol_demo/sitemap.xml
