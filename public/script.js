@@ -71,10 +71,10 @@
         form.reset();
       } else {
         const reason = result.message || result.error || 'The email service did not confirm delivery.';
-        if (status) { status.textContent = 'Your enquiry was NOT confirmed as sent. ' + reason + ' Please try again or email jejurkarabhishek@gmail.com directly.'; status.dataset.state = 'error'; }
+        if (status) { status.textContent = 'Your enquiry was NOT confirmed as sent. ' + reason + ' Please try again or contact ashutosh@texol.in directly.'; status.dataset.state = 'error'; }
       }
     } catch (error) {
-      if (status) { status.textContent = 'Your enquiry was NOT sent because the email service could not be reached. Check your connection and try again, or email jejurkarabhishek@gmail.com directly.'; status.dataset.state = 'error'; }
+      if (status) { status.textContent = 'Your enquiry was NOT sent because the email service could not be reached. Check your connection and try again, or contact ashutosh@texol.in directly.'; status.dataset.state = 'error'; }
     } finally {
       if (submitButton) { submitButton.disabled = false; submitButton.removeAttribute('aria-busy'); }
     }
