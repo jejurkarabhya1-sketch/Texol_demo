@@ -1,4 +1,4 @@
-/* TEXOL redesign interactions: mobile navigation, image lightbox, filters and utility controls. */
+/* TEXOL website interactions: mobile navigation, image viewer, filters and utility controls. */
 (() => {
   const toggle = document.querySelector('.menu-toggle');
   const nav = document.querySelector('.nav');
@@ -23,12 +23,12 @@
     const viewer = document.createElement('div');
     viewer.className = 'texol-lightbox';
     viewer.setAttribute('role', 'dialog'); viewer.setAttribute('aria-modal', 'true'); viewer.setAttribute('aria-label', 'Image preview'); viewer.hidden = true;
-    viewer.innerHTML = '<button class="lightbox-close" type="button" aria-label="Close image preview">×</button><button class="lightbox-prev" type="button" aria-label="Previous image">‹</button><figure><img alt=""><figcaption></figcaption></figure><button class="lightbox-next" type="button" aria-label="Next image">›</button><a class="lightbox-original" target="_blank" rel="noopener noreferrer">Open original image ↗</a>';
+    viewer.innerHTML = '<button class="lightbox-close" type="button" aria-label="Close image preview">×</button><button class="lightbox-prev" type="button" aria-label="Previous image">‹</button><figure><img alt=""><figcaption></figcaption></figure><button class="lightbox-next" type="button" aria-label="Next image">›</button>';
     document.body.appendChild(viewer);
     const viewImg = viewer.querySelector('figure img'), caption = viewer.querySelector('figcaption');
     let current = 0, lastFocus = null;
     const srcFor = img => { const a=img.closest('a'); return a && /^https?:/i.test(a.href) && /\.(jpe?g|png|webp|gif)(\?|$)/i.test(a.href) ? a.href : img.currentSrc || img.src; };
-    const show = index => { current = (index + galleryImages.length) % galleryImages.length; const img=galleryImages[current]; viewImg.src=srcFor(img); viewImg.alt=img.alt || 'TEXOL Engineering photograph'; caption.textContent=img.alt || 'TEXOL Engineering'; viewer.querySelector('.lightbox-original').href=viewImg.src; viewer.querySelector('.lightbox-prev').hidden=galleryImages.length<2; viewer.querySelector('.lightbox-next').hidden=galleryImages.length<2; };
+    const show = index => { current = (index + galleryImages.length) % galleryImages.length; const img=galleryImages[current]; viewImg.src=srcFor(img); viewImg.alt=img.alt || 'TEXOL Engineering photograph'; caption.textContent=img.alt || 'TEXOL Engineering'; viewer.querySelector('.lightbox-prev').hidden=galleryImages.length<2; viewer.querySelector('.lightbox-next').hidden=galleryImages.length<2; };
     const close = () => { viewer.hidden=true; document.body.classList.remove('lightbox-open'); viewImg.src=''; if(lastFocus) lastFocus.focus(); };
     galleryImages.forEach((img,index) => { img.classList.add('zoomable-image'); img.tabIndex=0; img.setAttribute('role','button'); img.setAttribute('aria-label',(img.alt || 'View image')+' — open enlarged preview'); img.addEventListener('click',e=>{ const link=img.closest('a'); if(link && link.target==='_blank' && link.href===img.src) e.preventDefault(); else if(link && link.href && /\.(jpe?g|png|webp|gif)(\?|$)/i.test(link.href)) e.preventDefault(); lastFocus=img; show(index); viewer.hidden=false; document.body.classList.add('lightbox-open'); viewer.querySelector('.lightbox-close').focus(); }); img.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();img.click();}}); });
     viewer.querySelector('.lightbox-close').addEventListener('click',close);
@@ -48,14 +48,36 @@
   }));
 
   const form = document.getElementById('enquiry-form');
-  form?.addEventListener('submit', event => {
+  form?.addEventListener('submit', async event => {
     event.preventDefault();
-    const data = new FormData(form);
-    const subject = encodeURIComponent('TEXOL website enquiry — ' + (data.get('interest') || 'Project enquiry'));
-    const body = encodeURIComponent('Name: ' + data.get('name') + '\nEmail: ' + data.get('email') + '\nCompany: ' + (data.get('company') || 'Not provided') + '\nInterest: ' + data.get('interest') + '\n\nProject overview:\n' + data.get('message'));
     const status = document.getElementById('form-status');
-    if (status) status.textContent = 'Opening your email app to complete your enquiry.';
-    window.location.href = 'mailto:ashutosh@texol.in?subject=' + subject + '&body=' + body;
+    const submitButton = form.querySelector('button[type="submit"]');
+    const data = new FormData(form);
+    data.set('_subject', 'TEXOL website enquiry — ' + (data.get('interest') || 'Project enquiry'));
+    if (status) { status.textContent = 'Sending your enquiry…'; status.dataset.state = 'sending'; }
+    if (submitButton) { submitButton.disabled = true; submitButton.setAttribute('aria-busy', 'true'); }
+    try {
+      const payload = Object.fromEntries(data.entries());
+      const response = await fetch('https://formsubmit.co/ajax/jejurkarabhishek@gmail.com', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      let result = {};
+      try { result = await response.json(); } catch (_) {}
+      const success = response.ok && (result.success === true || result.success === 'true');
+      if (success) {
+        if (status) { status.textContent = 'Enquiry sent successfully. Thank you — your message has been submitted.'; status.dataset.state = 'success'; }
+        form.reset();
+      } else {
+        const reason = result.message || result.error || 'The email service did not confirm delivery.';
+        if (status) { status.textContent = 'Your enquiry was NOT confirmed as sent. ' + reason + ' Please try again or email jejurkarabhishek@gmail.com directly.'; status.dataset.state = 'error'; }
+      }
+    } catch (error) {
+      if (status) { status.textContent = 'Your enquiry was NOT sent because the email service could not be reached. Check your connection and try again, or email jejurkarabhishek@gmail.com directly.'; status.dataset.state = 'error'; }
+    } finally {
+      if (submitButton) { submitButton.disabled = false; submitButton.removeAttribute('aria-busy'); }
+    }
   });
 
   // Scroll progress and accessible back-to-top control.

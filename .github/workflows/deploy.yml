@@ -1,4 +1,4 @@
-name: Deploy TEXOL redesign to GitHub Pages
+name: Deploy TEXOL Website to GitHub Pages
 
 on:
   push:
