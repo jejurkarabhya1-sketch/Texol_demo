@@ -1,4 +1,4 @@
-# TEXOL Engineering — responsive redesign (Astro + GitHub Pages)
+# TEXOL Engineering — responsive website refresh (Astro + GitHub Pages)
 
 ## Features in this build
 - Responsive desktop/tablet/mobile layout and mobile navigation
@@ -19,3 +19,5 @@
 - Contact form prepares an email draft only; it does not send/store form data on a server.
 - SEO metadata is a technical foundation, not a guarantee of ranking. Search Console submission, real domain canonical strategy, image permissions, company claims and contact details should be reviewed before production.
 - This package has not been live-deployed by the assistant. Run GitHub Actions to confirm the final build.
+
+All page-to-page navigation stays within this website. Public photos are currently loaded from TEXOL image hosting.

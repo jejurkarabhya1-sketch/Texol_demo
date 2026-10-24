@@ -54,7 +54,7 @@
     const subject = encodeURIComponent('TEXOL website enquiry — ' + (data.get('interest') || 'Project enquiry'));
     const body = encodeURIComponent('Name: ' + data.get('name') + '\nEmail: ' + data.get('email') + '\nCompany: ' + (data.get('company') || 'Not provided') + '\nInterest: ' + data.get('interest') + '\n\nProject overview:\n' + data.get('message'));
     const status = document.getElementById('form-status');
-    if (status) status.textContent = 'Opening your email app. No data has been sent by this prototype.';
+    if (status) status.textContent = 'Opening your email app to complete your enquiry.';
     window.location.href = 'mailto:ashutosh@texol.in?subject=' + subject + '&body=' + body;
   });
 
