@@ -47,3 +47,10 @@ The repository includes `.github/workflows/deploy.yml`. Push the project to a Gi
 - https://texol.in/index.php/gallery/
 - https://texol.in/index.php/texol-energy/
 - https://texol.in/index.php/contact-us/
+
+
+## GitHub Pages configuration
+
+This project is configured for the repository `abhijejurkar/Texol_demo`, with the project-site base path `/Texol_demo`. If you rename the repository, update `base` in `astro.config.mjs` and the `/Texol_demo/` asset prefixes in `src/pages/*.astro`.
+
+The browser script is loaded as an inline-preserved public asset (`/Texol_demo/script.js`) so Astro does not try to resolve it relative to each `.astro` source file.
