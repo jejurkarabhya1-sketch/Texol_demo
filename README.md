@@ -14,7 +14,7 @@ Responsive multi-page website built with Astro and deployed to GitHub Pages.
 3. Commit and push to `main`, then review the Actions run.
 
 ## Configuration
-- Current Pages base: `https://abhijejurkar.github.io/Texol_demo/`. Update `astro.config.mjs`, canonical URLs and `public/sitemap.xml` if the hosting URL changes.
+- Current Pages base: `https://jejurkarabhya1-sketch.github.io/Texol_demo/`. Update `astro.config.mjs`, canonical URLs and `public/sitemap.xml` if the hosting URL changes.
 - Photos are currently served from TEXOL image hosting. Approved local copies can be bundled later to reduce external dependency.
 - The contact form opens your email application with the enquiry details prefilled; it does not store enquiries on a server.
 
